@@ -23,13 +23,15 @@ print(dataset.isna().sum())
 X = dataset.iloc[:, 1:-1].values
 y = dataset.iloc[:, [-1]].values
 
-#Preprocess the dataset
-X = StandardScaler().fit_transform(X)
-#X = Normalizer().fit_transform(X)
-#X = MinMaxScaler().fit_transform(X)
-
 #Split data into training and testing split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.25, random_state = 0, stratify = y)
+
+#Preprocess the dataset
+scaler = StandardScaler()
+#scaler = Normalizer()
+#scaler = MinMaxScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
 
 #Train a classifier
 classifier = LinearSVC(multi_class = 'ovr')
